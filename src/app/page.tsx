@@ -1,24 +1,17 @@
-"use client";
-import Chart from "@/components/Chart";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { getSymbolsInfo } from "../../server";
+import SymbolLink from "@/components/SymbolLink";
 
-export default function Home() {
-  const [onOff, setOnOff] = useState<boolean>(true);
-
-  const handleOnOff = () => {
-    setOnOff((cur) => !cur);
-  };
+export default async function Home() {
+  const symbolArr = await getSymbolsInfo();
 
   return (
     <div>
-      <div>{onOff ? <Chart /> : "종료"}</div>
-      <button
-        className="mt-4 border-cyan-50 border-2 p-1 rounded-lg"
-        onClick={handleOnOff}
-      >
-        ON / OFF
-      </button>
+      <div>HOME</div>
+      <ul>
+        {symbolArr.map((item) => (
+          <SymbolLink symbol={item.symbol} />
+        ))}
+      </ul>
     </div>
   );
 }

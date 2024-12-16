@@ -3,7 +3,7 @@ import { CandlestickData, createChart } from "lightweight-charts";
 import { useEffect, useRef } from "react";
 import ChartOptions from "./ChartOptions";
 
-const Chart = () => {
+const Chart = ({ symbol: s }: { symbol: string }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const wsUrl: string = process.env.NEXT_PUBLIC_BINANCE_WS_MARKET_STREAM_URL!;
 
@@ -20,8 +20,7 @@ const Chart = () => {
       );
 
       // ws stream
-      ("/btcusdt@markPrice@1s");
-      const socket = new WebSocket(wsUrl + "/btcusdt@kline_1m");
+      const socket = new WebSocket(wsUrl + `/${s.toLowerCase()}@kline_1m`);
 
       socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -51,11 +50,6 @@ const Chart = () => {
 
         candlestickSeries.update(candleStick as CandlestickData);
       };
-
-      //   chart.timeScale().setVisibleRange({
-      //     from: ,
-      //     to:
-      //   });
 
       return () => {
         socket.close();

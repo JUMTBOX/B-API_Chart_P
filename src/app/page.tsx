@@ -1,3 +1,4 @@
+import SymbolList from "@/components/SymbolList";
 import { getSymbolsInfo } from "../../server";
 import SymbolLink from "@/components/SymbolLink";
 
@@ -7,11 +8,7 @@ export default async function Home() {
   return (
     <div>
       <div>HOME</div>
-      <ul>
-        {symbolArr.map((item) => (
-          <SymbolLink symbol={item.symbol} />
-        ))}
-      </ul>
+      <SymbolList symbolArr={symbolArr} />
     </div>
   );
 }

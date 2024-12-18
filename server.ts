@@ -1,14 +1,14 @@
 "use server";
 import axios from "axios";
 
-type SymbolVO = {
+export type SymbolVO = {
   symbol: string;
   pair?: string;
   baseAsset: string;
   quoteAsset: "USDT";
 };
 
-export async function getSymbolsInfo(): Promise<SymbolVO[]> {
+export async function getSymbolsInfo(): Promise<string[]> {
   const { BINANCE_REST_BASE_URL, ENDP_EXCHANGE_INFO } = process.env;
 
   const {
@@ -21,7 +21,7 @@ export async function getSymbolsInfo(): Promise<SymbolVO[]> {
   );
 
   return entries.map((item) => {
-    const { symbol, baseAsset, quoteAsset } = item[1] as SymbolVO;
-    return { symbol, baseAsset, quoteAsset };
+    const { symbol } = item[1] as SymbolVO;
+    return symbol;
   });
 }
